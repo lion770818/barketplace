@@ -12,9 +12,10 @@ import (
 )
 
 type RepositoriesManager struct {
-	User repository.UserRepository
-	Food repository.FoodRepository
-	db   *gorm.DB
+	User        repository.UserRepository
+	Food        repository.FoodRepository
+	Transaction repository.TransactionRepository
+	db          *gorm.DB
 }
 
 // 建立db連線
@@ -33,9 +34,10 @@ func NewRepositories(cfg *config.SugaredConfig) (*RepositoriesManager, error) {
 	db := mysql.NewDB(mysqlCfg)
 
 	return &RepositoriesManager{
-		User: NewUserRepository(db),
-		Food: NewFoodRepository(db),
-		db:   db,
+		User:        NewUserRepository(db),
+		Food:        NewFoodRepository(db),
+		Transaction: NewTransactionRepository(db),
+		db:          db,
 	}, nil
 }
 
@@ -50,5 +52,5 @@ func (s *RepositoriesManager) GetDB() *gorm.DB {
 
 // This migrate all tables
 func (s *RepositoriesManager) Automigrate() error {
-	return s.db.AutoMigrate(&entity.User{}, &entity.Food{}).Error
+	return s.db.AutoMigrate(&entity.User{}, &entity.Food{}, &entity.Transaction{}).Error
 }

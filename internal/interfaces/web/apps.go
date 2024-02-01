@@ -15,6 +15,7 @@ type Apps struct {
 	Users        *interfaces.Users
 	Food         *interfaces.Food
 	Authenticate *interfaces.Authenticate
+	Transaction  *interfaces.Transaction
 }
 
 func NewApps(repos *repositories.RepositoriesManager, redisService *auth.RedisService) *Apps {
@@ -25,6 +26,7 @@ func NewApps(repos *repositories.RepositoriesManager, redisService *auth.RedisSe
 	users := interfaces.NewUsers(repos.User, redisService.Auth, tk)
 	foods := interfaces.NewFood(repos.Food, repos.User, fd, redisService.Auth, tk)
 	authenticate := interfaces.NewAuthenticate(repos.User, redisService.Auth, tk)
+	//transaction := interfaces.NewTransaction(repos.Food, repos.User, fd, redisService.Auth, tk)
 
 	return &Apps{
 		Repos:        repos,
@@ -32,6 +34,7 @@ func NewApps(repos *repositories.RepositoriesManager, redisService *auth.RedisSe
 		Users:        users,
 		Food:         foods,
 		Authenticate: authenticate,
+		//Transaction:  transaction,
 	}
 }
 

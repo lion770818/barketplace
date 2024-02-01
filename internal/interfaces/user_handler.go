@@ -72,6 +72,7 @@ func (s *Users) GetUsers(c *gin.Context) {
 	users := entity.Users{} //customize user
 	var err error
 	//us, err = application.UserApp.GetUsers()
+	//s.GetUsers()
 	users, err = s.us.GetUsers() // interface to infrastructure
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err.Error())
